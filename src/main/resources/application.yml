@@ -1,0 +1,12 @@
+server:
+  port : 8081
+camunda.bpm.client:
+  base-url: http://localhost:8080/engine-rest
+  worker-id: workerSpringBootMultiThread
+  date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  default-serialization-format: application/json
+spring.datasource:
+  url: jdbc:h2:./process-engine;TRACE_LEVEL_FILE=0;DB_CLOSE_ON_EXIT=FALSE
+  driver-class-name: org.h2.Driver
+  username: sa
+  password: sa
