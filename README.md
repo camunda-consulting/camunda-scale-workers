@@ -18,7 +18,8 @@ Deploy on this engine the process worktodo.bpm
 
 Play with the topic-name on each prototype. Use "work-to-do" to setup the correct topic.
 
-Start org.camunda.scale.BeanThreadApplication
+Start [org.camunda.scale.BeanThreadApplication](https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/BeanThreadApplication.java) 
+
 
 On the Camunda Engine, create a process instance in worktodo.
 
