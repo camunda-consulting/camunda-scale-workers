@@ -25,7 +25,7 @@ On the Camunda Engine, create a process instance in worktodo.
 
 # option 1 Multiple Workers objects:
 
-Visit org.camunda.scale.externalclient.External
+Visit [org.camunda.scale.externalclient.ExternalJava](https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/externalclient/ExternalJava.java)
 This solution is a Java program that creates multiple Client Workers.
 Each client run in a different thread.
 Starting the software with numberOfClients = 20, the total time to execute the treatment is 3 mn 39.
@@ -36,7 +36,7 @@ Starting the software with numberOfClients = 20, the total time to execute the t
 80 clients => 128372
 
 # Option 2 BeanThreadApplication
-Visit org.camunda.scale.beanthread.BeanThread
+Visit [org.camunda.scale.beanthread.BeanThread](https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/beanthread/BeanThread.java)
 In this implementation, each call immediately starts a new thread, which handles the execution.
 To control the maximum number of threads running on the machine, a ThreadPoolExecutor is used, with a limit of 40 threads.
 
@@ -44,18 +44,21 @@ Attention: This method has a limitation. Because any task is immediately taken i
 Using this method implies having a big lock duration or using the next option
 
 # Option 3 BeanThreadApplication Limited
-3.1 Visit org.camunda.scale.beanthreadlimitation.BeanThreadLimitedByExecutor
+
+## Limited by executor
+Visit [org.camunda.scale.beanthreadlimitation.BeanThreadLimitedByExecutor](https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/beanthreadlimitation/BeanThreadLimitedByExecutor.java)
 Same as before, except when the ThreadPool is full, the external client is stopped. The client does not accept any new task.
-To do the stop() and start, a new thread has to be used. External task does not accept that the handle thread does this kind of operation.
+To do the stop() and start(), a new thread has to be used. External task does not accept that the handle thread does this kind of operation.
 Note: this way to handle the start/stop is very dynamique, and can be used to resize the number of workers differently in the day. 
 
-3.2 Visit org.camunda.scale.beanthreadlimitation.BeanThreadLimitedByObject
+## Limited by Object
+Visit [org.camunda.scale.beanthreadlimitation.BeanThreadLimitedByObject] (https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/beanthreadlimitation/BeanThreadLimitedByObject.java)
 In this implementation, the bean created a limited number of ExternalTask Client.
 
 Note: you have to change the topic to get the work between beanthread/BeanThread and beanthreadlimitation/BeanThreadLimited
 
 # Option 4 : Spring Boot Dynamic beans
-Visit org.camunda.scale.beanthreadlimitation.BeanInstanciation 
+Visit [org.camunda.scale.multibean.BeanInstanciation] (https://github.com/camunda-consulting/camunda-scale-workers/blob/main/src/main/java/org/camunda/scale/multibean/BeanInstanciation.java)
 
 Create dynamically multiple beans, to have multiple threads.
 
@@ -66,5 +69,6 @@ The BeanTread pattern is more convenient than the BeanModel.
 In the spring boot config, describe multiple environment. Each environment starts its own workers.
 Recommendation:
 * Each worker should have a different worker ID
-* Set the max task to 1
-  ==> To verify
+* Set the max task to 1 
+
+This option has not been verified
